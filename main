@@ -1,0 +1,44 @@
+local mob = require(script.Mob)
+local map = workspace.RuinedBattlefields
+
+for wave=1, 10 do
+	print("WAVE STARTING:", wave)
+
+	if wave <= 2 then
+		mob.Spawn("HumanoidModel", 3 * wave, map)
+	elseif wave <= 4 then
+		for i=1,5 do
+			mob.Spawn("paleInfected", wave, map)
+			mob.Spawn("Infected", wave, map)
+		end
+	elseif wave <= 7 then
+		for i=1,5 do
+			mob.Spawn("paleInfected", wave, map)
+			mob.Spawn("Infected", wave, map)
+			mob.Spawn("Nova", 2 * (wave *0.5), map)
+		end
+	elseif wave <= 9 then
+		mob.Spawn("Nova", 2 * wave, map)
+		mob.Spawn("Infected", wave, map)
+		for i=1,5 do
+			mob.Spawn("paleInfected", (wave *0.5), map)
+			mob.Spawn("Nova", (wave *0.5), map)
+		end
+		mob.Spawn("Teddy", 1, map)
+	elseif wave == 10 then
+		mob.Spawn("paleInfected", 100, map)
+		for i=1, 5 do
+			mob.Spawn("Nova", 5, map)
+			mob.Spawn("Teddy", 1, map)
+			mob.Spawn("paleInfected", 2, map)
+		end
+		mob.Spawn("Teddy", 10, map)
+	end
+
+	repeat
+		task.wait(1)
+	until #workspace.Mobs:GetChildren() == 0
+
+	print("WAVE ENDED")
+	task.wait(1)
+end
